@@ -21,7 +21,7 @@ const Movies = () => {
 
   const getQuery = newQuery => {
     if (newQuery === query) {
-      // toast.info('You already see results for this query 🥳');
+      toast.info('You already see results for this query 🥳');
       return;
     }
 
