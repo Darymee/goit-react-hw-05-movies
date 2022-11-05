@@ -1,11 +1,12 @@
 import { Outlet, useParams, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import { FiArrowLeftCircle } from 'react-icons/fi';
 
 import { getFilmInformation } from 'api/api';
 import { imgUrl } from 'constans/imgUrl';
 import poster from '../../img/noPoster.jpeg';
+import { Loader } from '../../components/Loader';
 
 import {
   LinkBack,
@@ -22,7 +23,7 @@ import {
   InfoLink,
 } from './MovieDetails.styled';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
@@ -107,16 +108,23 @@ export const MovieDetails = () => {
           <InfoTitle>Additional information</InfoTitle>
           <InfoList>
             <InfoItem>
-              <InfoLink to="cast">Cast</InfoLink>
+              <InfoLink to="cast" state={{ from: backLinkHref }}>
+                Cast
+              </InfoLink>
             </InfoItem>
             <InfoItem>
-              <InfoLink to="reviews">Reviews</InfoLink>
+              <InfoLink to="reviews" state={{ from: backLinkHref }}>
+                Reviews
+              </InfoLink>
             </InfoItem>
           </InfoList>
         </div>
       </Wrapper>
-
-      <Outlet></Outlet>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default MovieDetails;

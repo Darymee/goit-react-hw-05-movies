@@ -12,19 +12,20 @@ import {
   Text,
 } from './Reviews.styled';
 
-export const Reviews = () => {
+const Reviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState(null);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     createReviewList(movieId);
-    // eslint-disable-next-line
-  }, []);
+  }, [movieId]);
 
   async function createReviewList(id) {
     const reviewsList = await getFilmReviews(id);
+
     if (!reviewsList.length) {
+      setError(false);
       return;
     }
     setReviews(reviewsList);
@@ -33,7 +34,9 @@ export const Reviews = () => {
 
   return (
     <Wrapper>
-      {!error && <ErrorMessage text={'Sorry, there are no reviews yet 🥺'} />}
+      {error === false && (
+        <ErrorMessage text={'Sorry, there are no reviews yet 🥺'} />
+      )}
       {error && (
         <ul>
           {reviews.map(({ author, created_at, content }) => (
@@ -48,3 +51,5 @@ export const Reviews = () => {
     </Wrapper>
   );
 };
+
+export default Reviews;

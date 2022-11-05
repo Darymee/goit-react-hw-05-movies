@@ -25,6 +25,7 @@ export const StyledLink = styled(NavLink)`
 
   &.active {
     color: #ffffff;
+    text-shadow: #fff 1px 0 10px;
     font-weight: 600;
   }
   &:hover:not(.active),

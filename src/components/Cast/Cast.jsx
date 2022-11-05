@@ -15,19 +15,20 @@ import {
   Description,
 } from './Cast.styles';
 
-export const Cast = () => {
+const Cast = () => {
   const { movieId } = useParams();
   const [actorsList, setActorsList] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     createCastList(movieId);
-    // eslint-disable-next-line
-  }, []);
+  }, [movieId]);
 
   async function createCastList(id) {
     const castList = await getFilmCredits(id);
+
     if (!castList.length) {
+      setError(false);
       return;
     }
     setActorsList(castList);
@@ -36,7 +37,7 @@ export const Cast = () => {
 
   return (
     <Wrapper>
-      {!error && (
+      {error === false && (
         <ErrorMessage text={'Sorry, there are no information about cast 😢'} />
       )}
       {error && (
@@ -60,3 +61,5 @@ export const Cast = () => {
     </Wrapper>
   );
 };
+
+export default Cast;

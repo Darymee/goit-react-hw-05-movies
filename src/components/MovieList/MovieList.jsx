@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { fetchTrendyFilms } from 'api/api';
 import { imgUrl } from 'constans/imgUrl';
-import { Title } from '../Title/Title';
 import poster from '../../img/noPoster.jpeg';
 
 import {
@@ -16,8 +16,10 @@ import {
   Rating,
 } from './MovieList.styled';
 
-export const MovieList = ({ list, text }) => {
+export const MovieList = ({ list }) => {
   const [movies, setMovies] = useState([]);
+  const location = useLocation();
+  const currentUrl = location.pathname === '/' ? 'movies/' : '';
 
   useEffect(() => {
     if (list) {
@@ -39,12 +41,11 @@ export const MovieList = ({ list, text }) => {
 
   return (
     <div>
-      <Title text={'Trending today'} />
       <List>
         {movies.map(
           ({ id, poster_path, title, release_date, vote_average }) => (
             <MovieItem key={id}>
-              <NavLink to={`movie/${id}`}>
+              <NavLink to={`${currentUrl}${id}`} state={{ from: location }}>
                 <Poster
                   src={poster_path ? imgUrl + poster_path : poster}
                   alt={title}
@@ -63,4 +64,8 @@ export const MovieList = ({ list, text }) => {
       </List>
     </div>
   );
+};
+
+MovieList.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.object),
 };

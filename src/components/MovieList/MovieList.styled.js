@@ -64,7 +64,7 @@ export const Rating = styled.p`
   text-align: center;
 
   color: ${p => {
-    if (p.rating < 3) {
+    if (p.rating <= 3.5) {
       return '#A5260A';
     }
     if (p.rating < 7) {

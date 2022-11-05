@@ -11,7 +11,9 @@ export const LinkBack = styled(Link)`
   justify-content: center;
 
   font-size: 20px;
+
   color: #4d4f57;
+
   transition: color 300ms cubic-bezier(0.23, 1, 0.32, 1);
 
   & svg {
@@ -43,6 +45,7 @@ export const ImageWrapp = styled.div`
 `;
 
 export const Poster = styled.img`
+  box-shadow: 11px 12px 46px -16px rgba(255, 255, 255, 0.78);
   width: 100%;
 `;
 
@@ -50,6 +53,7 @@ export const MovieName = styled.h2`
   font-weight: 600;
   font-size: 35px;
   margin-bottom: 20px;
+  text-shadow: #fff 1px 0 10px;
 `;
 
 export const CategoryItem = styled.li`
@@ -106,7 +110,9 @@ export const InfoLink = styled(NavLink)`
 
   font-weight: 500;
   font-size: 20px;
+
   &.active {
+    text-shadow: #fff 1px 0 10px;
     font-weight: 600;
     color: #ffffff;
   }

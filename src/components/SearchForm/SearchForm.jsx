@@ -1,39 +1,28 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export const SearchForm = ({ onSubmit }) => {
-  const [query, setQuery] = useState('');
+import { FiSearch } from 'react-icons/fi';
+import { Form, Input, SearchButton } from './SearchForm.styled';
 
-  const onChange = e => {
-    const newQuery = e.target.value.trim().toLowerCase();
-    setQuery(newQuery);
-  };
-
-  const reset = () => {
-    setQuery('');
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (!query) {
-      alert('Please write something! 🤨');
-      return;
-    }
-    onSubmit(query);
-    reset();
-  };
-
+export const SearchForm = ({ onSubmit, onChange, query }) => {
   return (
-    <form autoComplete="off" onSubmit={handleSubmit}>
-      <label>
-        <input
-          type="text"
-          autoFocus
-          value={query}
-          name="search"
-          onChange={onChange}
-        />
-      </label>
-      <button type="submit">Search</button>
-    </form>
+    <Form autoComplete="off" onSubmit={onSubmit}>
+      <SearchButton type="submit">
+        <FiSearch />
+      </SearchButton>
+      <Input
+        type="text"
+        autoFocus
+        value={query}
+        name="search"
+        onChange={e => onChange(e.target.value.trim().toLowerCase())}
+        placeholder="Search movies"
+      />
+    </Form>
   );
+};
+
+SearchForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
 };
