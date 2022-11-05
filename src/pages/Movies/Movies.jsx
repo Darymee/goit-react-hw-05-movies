@@ -70,7 +70,7 @@ const Movies = () => {
       <SearchForm onSubmit={getQuery} onChange={changeInput} query={search} />
       {isLoading && <Loader />}
       {error === false ? (
-        <ErrorMessage text={'Sorry, no results'} />
+        <ErrorMessage text={'Sorry, no results for your search'} />
       ) : (
         <MovieList list={filmList} />
       )}
