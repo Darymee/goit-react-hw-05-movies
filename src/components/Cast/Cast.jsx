@@ -28,19 +28,19 @@ const Cast = () => {
     const castList = await getFilmCredits(id);
 
     if (!castList.length) {
-      setError(false);
+      setError(true);
       return;
     }
     setActorsList(castList);
-    setError(true);
+    setError(false);
   }
 
   return (
     <Wrapper>
-      {error === false && (
+      {error && (
         <ErrorMessage text={'Sorry, there are no information about cast 😢'} />
       )}
-      {error && (
+      {error === false && (
         <List>
           {actorsList.map(({ name, profile_path, character }) => (
             <ListItem key={name}>

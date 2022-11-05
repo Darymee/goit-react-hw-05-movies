@@ -25,19 +25,17 @@ const Reviews = () => {
     const reviewsList = await getFilmReviews(id);
 
     if (!reviewsList.length) {
-      setError(false);
+      setError(true);
       return;
     }
     setReviews(reviewsList);
-    setError(true);
+    setError(false);
   }
 
   return (
     <Wrapper>
+      {error && <ErrorMessage text={'Sorry, there are no reviews yet 🥺'} />}
       {error === false && (
-        <ErrorMessage text={'Sorry, there are no reviews yet 🥺'} />
-      )}
-      {error && (
         <ul>
           {reviews.map(({ author, created_at, content }) => (
             <ReviewItem key={author}>

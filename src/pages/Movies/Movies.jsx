@@ -19,25 +19,14 @@ const Movies = () => {
   const search = searchParam.get('query') ?? '';
   const [isLoading, setIsLoading] = useState(false);
 
-  const getQuery = e => {
-    e.preventDefault();
-
-    const newQuery = e.target[1].value;
-    if (newQuery === '') {
-      toast.warn('Please white something 😊');
-      return;
-    }
-
+  const getQuery = newQuery => {
     if (newQuery === query) {
-      toast.info('You already see pictures for this query 😊');
+      toast.info('You already see results for this query 🥳');
       return;
     }
 
     setQuery(newQuery);
-  };
-
-  const changeInput = value => {
-    setSearchParam(value !== '' ? { query: value } : {});
+    setSearchParam(newQuery !== '' ? { query: newQuery } : {});
   };
 
   useEffect(() => {
@@ -73,7 +62,7 @@ const Movies = () => {
 
   return (
     <Wrapper>
-      <SearchForm onSubmit={getQuery} onChange={changeInput} query={search} />
+      <SearchForm onSubmit={getQuery} toast={toast.warning} />
       {isLoading && <Loader />}
       {error === false ? (
         <ErrorMessage text={'Sorry, no results for your search'} />

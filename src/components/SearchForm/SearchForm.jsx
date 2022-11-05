@@ -1,21 +1,46 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 import { FiSearch } from 'react-icons/fi';
 import { Form, Input, SearchButton } from './SearchForm.styled';
 
-export const SearchForm = ({ onSubmit, onChange, query }) => {
+export const SearchForm = ({ onSubmit, toast }) => {
+  const [query, setQuery] = useState('');
+
+  const onChange = e => {
+    const value = e.target.value.trim().toLowerCase();
+    setQuery(value);
+  };
+
+  const reset = () => {
+    setQuery('');
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    if (!query) {
+      toast('Please write something! 🥺');
+      return;
+    }
+
+    onSubmit(query);
+    reset();
+  };
+
   return (
-    <Form autoComplete="off" onSubmit={onSubmit}>
+    <Form onSubmit={handleSubmit}>
       <SearchButton type="submit">
         <FiSearch />
       </SearchButton>
       <Input
         type="text"
         autoFocus
-        value={query}
+        autoComplete="off"
         name="search"
-        onChange={e => onChange(e.target.value.trim().toLowerCase())}
+        onChange={onChange}
         placeholder="Search movies"
+        value={query}
       />
     </Form>
   );
@@ -23,6 +48,5 @@ export const SearchForm = ({ onSubmit, onChange, query }) => {
 
 SearchForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  query: PropTypes.string.isRequired,
+  toast: PropTypes.func.isRequired,
 };
