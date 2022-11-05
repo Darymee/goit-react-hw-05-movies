@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+
 import { fetchFilmsByName } from 'api/api';
 import { SearchForm } from 'components/SearchForm/SearchForm';
 import { MovieList } from 'components/MovieList/MovieList';
@@ -20,8 +23,9 @@ const Movies = () => {
     e.preventDefault();
 
     const newQuery = e.target[1].value;
+
     if (newQuery === query) {
-      alert('Results');
+      toast.warning('You already see search results');
       return;
     }
     setQuery(newQuery);
@@ -70,6 +74,18 @@ const Movies = () => {
       ) : (
         <MovieList list={filmList} />
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </Wrapper>
   );
 };
