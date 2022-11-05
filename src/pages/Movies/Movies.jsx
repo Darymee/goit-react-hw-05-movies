@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { fetchFilmsByName } from 'api/api';
 import { SearchForm } from 'components/SearchForm/SearchForm';
@@ -23,11 +23,16 @@ const Movies = () => {
     e.preventDefault();
 
     const newQuery = e.target[1].value;
-
-    if (newQuery === query) {
-      toast.warning('You already see search results');
+    if (newQuery === '') {
+      toast.warn('Please white something 😊');
       return;
     }
+
+    if (newQuery === query) {
+      toast.info('You already see pictures for this query 😊');
+      return;
+    }
+
     setQuery(newQuery);
   };
 
@@ -50,6 +55,7 @@ const Movies = () => {
     try {
       setFilmList([]);
       setIsLoading(true);
+
       const films = await fetchFilmsByName(newQuery);
       if (!films.length) {
         setError(false);
@@ -77,6 +83,7 @@ const Movies = () => {
       <ToastContainer
         position="top-right"
         autoClose={3000}
+        limit={3}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -84,7 +91,7 @@ const Movies = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="dark"
       />
     </Wrapper>
   );
