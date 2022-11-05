@@ -1,10 +1,11 @@
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { FiArrowLeftCircle } from 'react-icons/fi';
 
 import { getFilmInformation } from 'api/api';
 import { imgUrl } from 'constans/imgUrl';
+import poster from '../../img/noPoster.jpeg';
 
 import {
   LinkBack,
@@ -24,6 +25,8 @@ import {
 export const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
     getFilmInformation(movieId).then(setMovie);
@@ -44,15 +47,19 @@ export const MovieDetails = () => {
     runtime,
     spoken_languages,
   } = movie;
+
   return (
     <>
-      <LinkBack>
+      <LinkBack to={backLinkHref}>
         <FiArrowLeftCircle />
         Go Back
       </LinkBack>
       <Wrapper>
         <ImageWrapp>
-          <Poster src={imgUrl + poster_path} alt={title} />
+          <Poster
+            src={poster_path ? imgUrl + poster_path : poster}
+            alt={title}
+          />
         </ImageWrapp>
         <div>
           <MovieName>{original_title}</MovieName>
@@ -78,8 +85,8 @@ export const MovieDetails = () => {
             <CategoryItem>
               <Category>
                 Genres:
-                {genres.map(genre => (
-                  <Description key={genre.name}> {genre.name}</Description>
+                {genres.map(({ name }) => (
+                  <Description key={name}> {name}</Description>
                 ))}
               </Category>
             </CategoryItem>

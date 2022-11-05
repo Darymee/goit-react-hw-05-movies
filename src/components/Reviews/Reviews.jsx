@@ -14,29 +14,36 @@ import {
 
 export const Reviews = () => {
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    getFilmReviews(movieId).then(setReviews);
+    createReviewList(movieId);
     // eslint-disable-next-line
   }, []);
 
+  async function createReviewList(id) {
+    const reviewsList = await getFilmReviews(id);
+    if (!reviewsList.length) {
+      return;
+    }
+    setReviews(reviewsList);
+    setError(true);
+  }
+
   return (
     <Wrapper>
-      {reviews.length > 0 ? (
+      {!error && <ErrorMessage text={'Sorry, there are no reviews yet 🥺'} />}
+      {error && (
         <ul>
-          {reviews.map(review => (
-            <ReviewItem key={review.author}>
-              <Author>{review.author}</Author>
-              <DateReview>
-                {new Date(review.created_at).toLocaleString()}
-              </DateReview>
-              <Text>{review.content}</Text>
+          {reviews.map(({ author, created_at, content }) => (
+            <ReviewItem key={author}>
+              <Author>{author}</Author>
+              <DateReview>{new Date(created_at).toLocaleString()}</DateReview>
+              <Text>{content}</Text>
             </ReviewItem>
           ))}
         </ul>
-      ) : (
-        <ErrorMessage text={'Sorry, there are no reviews yet 🥺'} />
       )}
     </Wrapper>
   );

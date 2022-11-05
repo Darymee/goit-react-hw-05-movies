@@ -18,33 +18,44 @@ import {
 export const Cast = () => {
   const { movieId } = useParams();
   const [actorsList, setActorsList] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    getFilmCredits(movieId).then(setActorsList);
+    createCastList(movieId);
     // eslint-disable-next-line
   }, []);
 
+  async function createCastList(id) {
+    const castList = await getFilmCredits(id);
+    if (!castList.length) {
+      return;
+    }
+    setActorsList(castList);
+    setError(true);
+  }
+
   return (
     <Wrapper>
-      {actorsList.length > 0 ? (
+      {!error && (
+        <ErrorMessage text={'Sorry, there are no information about cast 😢'} />
+      )}
+      {error && (
         <List>
-          {actorsList.map(actor => (
-            <ListItem key={actor.name}>
+          {actorsList.map(({ name, profile_path, character }) => (
+            <ListItem key={name}>
               <Photo
-                src={actor.profile_path ? imgUrl + actor.profile_path : img}
-                alt={actor.name}
+                src={profile_path ? imgUrl + profile_path : img}
+                alt={name}
               ></Photo>
               <Category>
-                Name: <Description>{actor.name}</Description>
+                Name: <Description>{name}</Description>
               </Category>
               <Category>
-                Character: <Description>{actor.character}</Description>
+                Character: <Description>{character}</Description>
               </Category>
             </ListItem>
           ))}
         </List>
-      ) : (
-        <ErrorMessage text={'Sorry, there are no information about cast 😢'} />
       )}
     </Wrapper>
   );

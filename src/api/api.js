@@ -15,9 +15,9 @@ export async function fetchTrendyFilms() {
 export async function fetchFilmsByName(query) {
   try {
     const response = await axios.get(
-      `search/movie?api_key=${API_KEY}&language=en-US&query=${query}page=1&include_adult=false`
+      `search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`
     );
-    return response.data;
+    return response.data.results;
   } catch (error) {
     console.error(error);
   }

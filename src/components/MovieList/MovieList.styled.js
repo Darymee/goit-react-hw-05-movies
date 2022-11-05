@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-export const Title = styled.h1`
-  text-align: center;
-  font-weight: 600;
-  font-size: 35px;
-  margin-bottom: 20px;
-`;
-
 export const List = styled.ul`
   display: grid;
   max-width: calc(100vw - 48px);
