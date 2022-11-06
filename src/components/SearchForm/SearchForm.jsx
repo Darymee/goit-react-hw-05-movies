@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 
+import PropTypes from 'prop-types';
+
 import { FiSearch } from 'react-icons/fi';
+
 import { Form, Input, SearchButton } from './SearchForm.styled';
 
 export const SearchForm = ({ onSubmit, toast }) => {

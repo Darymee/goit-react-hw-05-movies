@@ -5,11 +5,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { fetchFilmsByName } from 'api/api';
+
 import { SearchForm } from 'components/SearchForm/SearchForm';
 import { MovieList } from 'components/MovieList/MovieList';
 import { ErrorMessage } from 'components/ErrorMessage/ErorrMessage';
-import { Wrapper } from './Movies.styled.js';
 import { Loader } from 'components/Loader.jsx';
+
+import { Wrapper } from './Movies.styled.js';
 
 const Movies = () => {
   const [query, setQuery] = useState('');
@@ -28,17 +30,6 @@ const Movies = () => {
     setQuery(newQuery);
     setSearchParam(newQuery !== '' ? { query: newQuery } : {});
   };
-
-  useEffect(() => {
-    if (search) {
-      setQuery(search);
-    }
-    if (!query) {
-      return;
-    }
-    createFilmList(query);
-    // eslint-disable-next-line
-  }, [query]);
 
   async function createFilmList(newQuery) {
     try {
@@ -59,6 +50,17 @@ const Movies = () => {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (search) {
+      setQuery(search);
+    }
+    if (!query) {
+      return;
+    }
+    createFilmList(query);
+    // eslint-disable-next-line
+  }, [query]);
 
   return (
     <Wrapper>

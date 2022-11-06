@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getFilmReviews } from 'api/api';
+
 import { ErrorMessage } from 'components/ErrorMessage/ErorrMessage';
 
 import {
@@ -17,10 +18,6 @@ const Reviews = () => {
   const [reviews, setReviews] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    createReviewList(movieId);
-  }, [movieId]);
-
   async function createReviewList(id) {
     const reviewsList = await getFilmReviews(id);
 
@@ -31,6 +28,10 @@ const Reviews = () => {
     setReviews(reviewsList);
     setError(false);
   }
+
+  useEffect(() => {
+    createReviewList(movieId);
+  }, [movieId]);
 
   return (
     <Wrapper>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getFilmCredits } from 'api/api';
+
 import { ErrorMessage } from 'components/ErrorMessage/ErorrMessage';
 import { imgUrl } from '../../constans/imgUrl';
 import img from '../../img/noImage.png';
@@ -20,10 +21,6 @@ const Cast = () => {
   const [actorsList, setActorsList] = useState([]);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    createCastList(movieId);
-  }, [movieId]);
-
   async function createCastList(id) {
     const castList = await getFilmCredits(id);
 
@@ -34,6 +31,10 @@ const Cast = () => {
     setActorsList(castList);
     setError(false);
   }
+
+  useEffect(() => {
+    createCastList(movieId);
+  }, [movieId]);
 
   return (
     <Wrapper>

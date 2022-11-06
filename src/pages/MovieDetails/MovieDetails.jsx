@@ -1,11 +1,14 @@
-import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { Suspense, useEffect, useState } from 'react';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 
 import { FiArrowLeftCircle } from 'react-icons/fi';
 
 import { getFilmInformation } from 'api/api';
+
 import { imgUrl } from 'constans/imgUrl';
+
 import poster from '../../img/noPoster.jpeg';
+
 import { Loader } from '../../components/Loader';
 
 import {

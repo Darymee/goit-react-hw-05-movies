@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 
 import { fetchTrendyFilms } from 'api/api';
+
 import { imgUrl } from 'constans/imgUrl';
 import poster from '../../img/noPoster.jpeg';
 
@@ -21,15 +23,6 @@ export const MovieList = ({ list }) => {
   const location = useLocation();
   const currentUrl = location.pathname === '/' ? 'movies/' : '';
 
-  useEffect(() => {
-    if (list) {
-      // eslint-disable-next-line
-      setMovies(list);
-      return;
-    }
-    createMovieList();
-  }, [list]);
-
   async function createMovieList() {
     const trendyMovies = await fetchTrendyFilms();
 
@@ -38,6 +31,15 @@ export const MovieList = ({ list }) => {
     }
     setMovies(trendyMovies);
   }
+
+  useEffect(() => {
+    if (list) {
+      // eslint-disable-next-line
+      setMovies(list);
+      return;
+    }
+    createMovieList();
+  }, [list]);
 
   return (
     <div>
