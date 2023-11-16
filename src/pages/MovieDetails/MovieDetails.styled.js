@@ -19,8 +19,8 @@ export const LinkBack = styled(Link)`
   & svg {
     stroke: #4d4f57;
     margin-right: 5px;
-    width: 20px;
-    height: 20px;
+    width: 23px;
+    height: 23px;
     transition: stroke 300ms cubic-bezier(0.23, 1, 0.32, 1);
   }
 
